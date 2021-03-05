@@ -1,0 +1,25 @@
+scoreboard:
+  lobby:
+    title: "&e&lHOLIDAYS SIMULATOR"
+    lines:
+      1: "hola"
+  wait-lobby:
+    title: "&e&lHOLIDAYS SIMULATOR"
+    lines:
+      - ''
+      - 'Starting in: %countdown%'
+      - 'Arena: %arena%'
+      - 'Players: %min_players%/%max_players%'
+  in-game:
+    title: "&e&lHOLIDAYS SIMULATOR"
+    lines:
+      - ''
+      - 'Time left: %time_left%'
+      - 'Gifts left: %gifts_left%'
+      - ''
+      - 'Your gifts: %gifts%'
+      - 'Ranking: %ranking%'
+      - ''
+      - '%top_1%'
+      - '%top_2%'
+      - '%top_3%'
