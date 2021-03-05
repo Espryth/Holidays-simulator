@@ -1,15 +1,19 @@
 package me.espryth.holidays.arena;
 
 import me.espryth.holidays.arena.game.Game;
+import me.espryth.holidays.arena.game.GameImpl;
 import me.espryth.holidays.arena.gift.Gift;
+import me.espryth.holidays.scoreboard.ScoreboardManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractArena implements Arena {
 
-    private String name;
+    private final String name;
 
     private ArenaState state;
 
@@ -17,14 +21,35 @@ public abstract class AbstractArena implements Arena {
     private int maxPlayers;
     private Location waitLobby;
     private Location playersSpawn;
-    private List<Player> players;
-    private List<Gift> gifts;
-    private Game game;
+    private final List<Player> winners;
+    private final List<Player> players;
+    private final List<Gift> gifts;
+    private final Game game;
 
-    public AbstractArena() {
+    public AbstractArena(Plugin plugin, ScoreboardManager scoreboardManager, String name) {
+        this.name = name;
+
+        this.minPlayers = 2;
+        this.maxPlayers = 8;
+        this.waitLobby = null;
+        this.playersSpawn = null;
+        this.winners = new ArrayList<>();
+        this.players = new ArrayList<>();
+        this.gifts = new ArrayList<>();
+
+        this.game = new GameImpl(plugin, scoreboardManager, this);
 
     }
 
+    @Override
+    public void restartArena() {
+
+    }
+
+    @Override
+    public void declareWinners() {
+
+    }
 
     @Override
     public ArenaState getState() {
@@ -74,6 +99,11 @@ public abstract class AbstractArena implements Arena {
     @Override
     public void setPlayersSpawn(Location playersSpawn) {
         this.playersSpawn = playersSpawn;
+    }
+
+    @Override
+    public List<Player> getWinners() {
+        return winners;
     }
 
     @Override

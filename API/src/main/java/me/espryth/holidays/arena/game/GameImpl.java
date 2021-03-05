@@ -3,9 +3,18 @@ package me.espryth.holidays.arena.game;
 import me.espryth.holidays.arena.Arena;
 import me.espryth.holidays.arena.ArenaState;
 import me.espryth.holidays.arena.game.phase.Phase;
+import me.espryth.holidays.arena.game.phase.impl.InGamePhase;
+import me.espryth.holidays.arena.game.phase.impl.StartingGamePhase;
+import me.espryth.holidays.arena.game.phase.impl.WaitingLobbyPhase;
+import me.espryth.holidays.event.PlayerJoinGameEvent;
+import me.espryth.holidays.event.PlayerQuitGameEvent;
+import me.espryth.holidays.scoreboard.ScoreboardManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameImpl implements Game {
@@ -16,10 +25,15 @@ public class GameImpl implements Game {
 
     private int index;
 
-    public GameImpl(Arena arena) {
-        this.phases = new ArrayList<>();
+    public GameImpl(Plugin plugin, ScoreboardManager scoreboardManager,Arena arena) {
+
         this.arena = arena;
         this.index = 0;
+        this.phases = new ArrayList<>(Arrays.asList(
+                new WaitingLobbyPhase(plugin, scoreboardManager, this),
+                new StartingGamePhase(plugin, scoreboardManager, this),
+                new InGamePhase(plugin, scoreboardManager, this)
+        ));
     }
 
     @Override
@@ -70,11 +84,14 @@ public class GameImpl implements Game {
 
     @Override
     public void playerJoin(Player player) {
+        arena.getPlayers().add(player);
+        Bukkit.getPluginManager().callEvent(new PlayerJoinGameEvent(this, player));
     }
 
     @Override
     public void playerLeave(Player player) {
-
+        arena.getPlayers().remove(player);
+        Bukkit.getPluginManager().callEvent(new PlayerQuitGameEvent(this, player));
     }
 
     @Override

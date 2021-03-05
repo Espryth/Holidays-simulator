@@ -1,22 +1,22 @@
 package me.espryth.holidays.event;
 
 import me.espryth.holidays.arena.game.Game;
-import me.espryth.holidays.user.User;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 
-public class GameJoinEvent extends GameEvent {
+public class PlayerJoinGameEvent extends GameEvent {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
-    private final User user;
+    private final Player player;
 
-    public GameJoinEvent(Game game, User user) {
+    public PlayerJoinGameEvent(Game game, Player player) {
         super(game);
-        this.user = user;
+        this.player = player;
     }
 
-    public User getUser() {
-        return user;
+    public Player getPlayer() {
+        return player;
     }
 
     public static HandlerList getHandlerList() {

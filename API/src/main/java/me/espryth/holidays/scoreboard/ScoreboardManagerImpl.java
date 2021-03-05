@@ -1,19 +1,21 @@
 package me.espryth.holidays.scoreboard;
 
 import me.espryth.holidays.cache.Cache;
-import me.espryth.holidays.cache.CacheImpl;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 public class ScoreboardManagerImpl implements ScoreboardManager {
 
-    private final Cache<PotoScoreboard> cache = new CacheImpl<>();
+    @Inject @Named("scoreboard") private Cache<PotoScoreboard> scoreboardCache;
 
     @Override
     public Cache<PotoScoreboard> getCache() {
-        return cache;
+        return scoreboardCache;
     }
 
     @Override
     public void register(PotoScoreboard scoreboard) {
-        this.cache.get().put(scoreboard.getName(), scoreboard);
+        scoreboardCache.get().put(scoreboard.getName(), scoreboard);
     }
 }

@@ -12,7 +12,7 @@ public abstract class AbstractPhase implements Phase{
     private final Plugin plugin;
     private int taskId;
 
-    private ScoreboardManager scoreboardManager;
+    private final ScoreboardManager scoreboardManager;
 
     public AbstractPhase(Plugin plugin, ScoreboardManager scoreboardManager, Game game) {
         this.plugin = plugin;
